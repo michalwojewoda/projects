@@ -39,6 +39,9 @@ ball.shape("square")
 ball.color("white")
 ball.penup()
 ball.goto(0,0) # placement of the ball 
+ball.dx = 4
+ball.dy = 4 
+
 
 #functions to move paddles 
 
@@ -69,10 +72,34 @@ def paddle_b_down():
 wn.listen() #this listens to the keyboard
 wn.onkeypress(paddle_a_up, "w")
 wn.onkeypress(paddle_a_down, "s")
-wn.onkeypress(paddle_b_up, "w")
-wn.onkeypress(paddle_b_down, "s")
+wn.onkeypress(paddle_b_up, "Up")
+wn.onkeypress(paddle_b_down, "Down")
 
 #main game loop
 
 while True:
     wn.update() 
+
+    #movin mechanizm
+    ball.setx(ball.xcor() + ball.dx)
+    ball.sety(ball.ycor() + ball.dy)
+
+    #border checking
+
+    if ball.ycor() > 290:
+        ball.sety(290)
+        ball.dy *= -1
+
+    elif ball.ycor() <  -290:
+        ball.sety(-290)
+        ball.dy *= -1
+
+    elif ball.xcor() > 390:
+        ball.goto(0,0)
+        ball.dx *= -1
+    
+    elif ball.xcor() < -390:
+        ball.goto(0,0)
+        ball.dx *= -1
+
+    
